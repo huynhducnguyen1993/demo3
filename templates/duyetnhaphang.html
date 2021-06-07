@@ -1,0 +1,156 @@
+{% extends 'base.html'%}
+{%load static%}
+
+{%block duyetnhaphang%}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+
+                        <li class="breadcrumb-item active">
+                          
+                      </li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title badge badge-pill badge-info">
+                              DUYỆT NHẬP HÀNG
+                            </h3>
+                        </div>
+                        <!-- /.card-header -->
+
+                        <!-- /.card-body -->
+                        
+                        <div style="padding:30px;">
+                        <form action=" " method="POST" class="form-horizontal" role="form">
+                                {% csrf_token %}                   
+                               <div><label>Nhân viên khinh danh  :</label> {{phieunhaphang.nhanvien}}</div>
+                               <div><label>Ngầy Tạo   :</label> {{phieunhaphang.thoigiantao}}</div>
+                               <div><label>Ngày Giao Dự Kiến  :</label> {{phieunhaphang.thoigiannhanhang}}</div>
+                               <div><label>Kho   :</label> {{phieunhaphang.kho}}</div>
+                               <div><label>Ghi Chú Kinh Doanh   :</label> {{phieunhaphang.ghichu}}</div>
+                               <div>
+                                   <table class="table table-hover table-bordered">
+                                       <thead>
+                                           <tr>
+                                               
+                                               <th>Tên Sản Phẩm</th>
+                                               <th>Số Lượng</th>
+                                               <th>Đơn Giá</th>
+                                               <th>Thành Tiền</th>
+                                           </tr>
+                                       </thead>
+                                       <tbody>
+                                           <tr>
+                                               <td>{{phieunhaphang.noidung.tenhang_1}}</td>
+                                               <td>{{phieunhaphang.noidung.soluong_1}}</td>
+                                               <td>{{phieunhaphang.noidung.dongia_1}}</td>
+                                               <td></td>
+                                           </tr>
+                                           {% if phieunhaphang.noidung.tenhang_2  %}
+                                           <tr>
+                                               <td>{{phieunhaphang.noidung.tenhang_2}}</td>
+                                               <td>{{phieunhaphang.noidung.soluong_2}}</td>
+                                               <td>{{phieunhaphang.noidung.dongia_2}}</td>
+                                               <td></td>
+                                           </tr>
+                                           {%endif%}
+                                           {% if phieunhaphang.noidung.tenhang_3  %}
+                                           <tr>
+                                               <td>{{phieunhaphang.noidung.tenhang_3}}</td>
+                                               <td>{{phieunhaphang.noidung.soluong_3}}</td>
+                                               <td>{{phieunhaphang.noidung.dongia_3}}</td>
+                                               <td></td>
+                                           </tr>
+                                           {%endif%}
+                                           {% if phieunhaphang.noidung.tenhang_4  %}
+                                           <tr>
+                                               <td>{{phieunhaphang.noidung.tenhang_4}}</td>
+                                               <td>{{phieunhaphang.noidung.soluong_4}}</td>
+                                               <td>{{phieunhaphang.noidung.dongia_4}}</td>
+                                               <td></td>
+                                           </tr>
+                                           {%endif%}
+                                       </tbody>
+                                   </table>
+                               </div>
+                               <div><label>Phản Hồi Cho Kinh Danh   :</label>{{form.phanhoi}}<br>
+                               
+                                   <div class="radio">
+                                       <label style="color:green;" id='nonhiden'>
+                                         {{form.tinhtrang}}
+                                           Duyệt Đơn Hàng
+                                       </label>
+                                       <br>
+                                       <label style="color:red; " id='hiden'>
+                                            {{form.tuchoi}}
+                                           Từ Chối Đơn Hàng
+                                       </label>
+                                   </div>
+                                   <br>
+
+                                <div class="form-group">
+
+                                    <div class="col-sm-10 col-sm-offset-2"><br>
+                                      <button type="button" id="load" class="btn btn btn-lg btn-default">Refresh</button>
+                                        <button type="submit" class="btn btn-lg btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+                   
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+
+
+
+</div>
+
+<script>
+    $(document).ready(function(){
+        $("#id_tinhtrang").change('checked',function(){
+          $('#hiden').hide();
+        });
+    
+          $("#id_tuchoi").change('checked',function(){
+          $('#nonhiden').hide();
+        });
+
+           $('#load').click(function() {
+         location.reload();
+           });
+
+    });
+
+    
+</script>
+{%endblock%}

@@ -1,0 +1,514 @@
+{% extends 'base.html'%}
+{%load static%}
+{%block dsnhanvien%}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Danh Sách Nhân Viên</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">dsnhanvien</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <section style="padding:15px">
+      <form  method="post" class="form-inline" role="form">
+       {% csrf_token %}
+        <div class="form-group">
+          <label class="sr-only" for="">label</label>
+          <input type="text" class="form-control" name="tennhanvien" placeholder="Nhập tên nhân viên (Tiếng Việt Có Dấu)">
+        </div>
+      
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+      {%if nvsearch %}
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Tên </th>
+            <th>Số Điện Thoại </th>
+            <th>Line Nội Bộ </th>
+            <th>Email(nếu có) </th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for item in nvsearch %}
+          <tr>
+            <td>{{item.tennv}}</td>
+            <td>{{item.sdt}}</td>
+            <td>{{item.line}}</td>
+            <td>{{item.email}}</td>
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+      {%endif%}
+    </section>
+    {% if not nvsearch %}
+    <section class="padding">
+	<div class=" panel panel-default">
+  <div class="card card-success ">
+  	<div class="card-header">
+
+                <h3 class="card-title">PHÒNG HCNS</h3><br>
+              </div>
+  </div>
+  <div class="panel-body padding">
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			<th>Line Nội Bộ</th>
+      			<th>Email (Nếu Có)</th>
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvhcns%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			<td>{{item.line}}</td>
+      			<td>{{item.email}}</td>
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+	<br><br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-info ">
+  	<div class="card-header">
+
+                <h3 class="card-title">PHÒNG KẾ TOÁN</h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			<th>Line Nội Bộ</th>
+      			<th>Email (Nếu Có)</th>
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvkt%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			<td>{{item.line}}</td>
+      			<td>{{item.email}}</td>
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+    <br><br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-warning ">
+  	<div class="card-header">
+
+                <h3 class="card-title">PHÒNG BÁN SỈ </h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+  	
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			<th>Line Nội Bộ</th>
+      			<th>Email (Nếu Có)</th>
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvbs%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			<td>{{item.line}}</td>
+      			<td>{{item.email}}</td>
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+<br><br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-info ">
+  	<div class="card-header">
+
+                <h3 class="card-title">PHÒNG DỊCH VỤ </h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+  	
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			<th>Line Nội Bộ</th>
+      			<th>Email (Nếu Có)</th>
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvdv%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			<td>{{item.line}}</td>
+      			<td>{{item.email}}</td>
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+<br><br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-info ">
+  	<div class="card-header">
+
+                <h3 class="card-title">PHÒNG DỰ ÁN </h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+  	
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			<th>Line Nội Bộ</th>
+      			<th>Email (Nếu Có)</th>
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvda%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			<td>{{item.line}}</td>
+      			<td>{{item.email}}</td>
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+<br><br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-info ">
+  	<div class="card-header">
+
+                <h3 class="card-title">KHO </h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+  	
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			<th>Line Nội Bộ</th>
+      			<th>Email (Nếu Có)</th>
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvkho%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			<td>{{item.line}}</td>
+      			<td>{{item.email}}</td>
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+<br><br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-info ">
+  	<div class="card-header">
+
+                <h3 class="card-title">PHÒNG THƯƠNG MẠI </h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+  	
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			<th>Line Nội Bộ</th>
+      			<th>Email (Nếu Có)</th>
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvtm%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			<td>{{item.line}}</td>
+      			<td>{{item.email}}</td>
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+<br><br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-dark ">
+  	<div class="card-header">
+
+                <h3 class="card-title">IT </h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+  	
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			<th>Line Nội Bộ</th>
+      			<th>Email (Nếu Có)</th>
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvit%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			<td>{{item.line}}</td>
+      			<td>{{item.email}}</td>
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+    <br><br>
+    <br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-muted ">
+  	<div class="card-header">
+
+                <h3 class="card-title">GIAO NHẬN </h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+  	
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvgn%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+    <br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-muted ">
+  	<div class="card-header">
+
+                <h3 class="card-title">KỸ THUẬT DỊCH VỤ </h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+  	
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvktdv%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+<br><br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-muted ">
+  	<div class="card-header">
+
+                <h3 class="card-title">KỸ THUẬT DỰ ÁN </h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+  	
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvktda%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			 
+      			      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+    </section>
+<br><br>
+    <section class="padding">
+	<div class="panel panel-default">
+  <div class="card card-danger ">
+  	<div class="card-header">
+
+                <h3 class="card-title">PROSHOP 2  </h3><br>
+              </div>
+  </div>
+  <div class="panel-body">
+  	
+
+      <table class="table table-striped table-hover">
+      	<thead>
+      		<tr>
+      			<th>Tên </th>
+      			<th>Số Điện Thoại</th>
+      			<th>Line Nội Bộ</th>
+      			<th>Email (Nếu Có)</th>
+      		</tr>
+
+      	</thead>
+      	<tbody>
+      		{%for item in nvproshop%}
+      		
+      		<tr>
+      			<td>{{item.tennv}}</td>
+      			<td>{{item.sdt}}</td>
+      			<td>{{item.line}}</td>
+      			<td>{{item.email}}</td>
+      		</tr>
+      		
+      		{%endfor%}
+      	</tbody>
+      </table>
+  </div>
+</div>    	
+
+    </section>
+    {%endif%}
+
+</div>
+<style>
+	.padding{
+	padding :10px;
+	}
+</style>
+
+{% endblock%}
+

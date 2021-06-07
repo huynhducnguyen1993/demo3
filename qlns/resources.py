@@ -1,0 +1,1 @@
+from import_export import resourcesfrom qlns.models import Nhanvienclass NhanvienResource(resources.ModelResource):    class Meta:        model = Nhanvien        exclude = ('imported',)

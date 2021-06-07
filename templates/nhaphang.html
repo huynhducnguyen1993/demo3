@@ -1,0 +1,359 @@
+{% extends 'base.html'%}
+{%load static%}
+{%block cssnhaphang%}
+<link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css'%}">
+{%endblock%}
+{%block nhaphang%}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>DataTables</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+
+                        <li class="breadcrumb-item active">
+                          <a type="button" href="{% url 'phieu-nhap-kho'%}"
+                                                              class="btn btn-primary btn-lg">
+                            Tạo Phiếu Nhập Hàng Kinh Doanh
+                          </a>
+                      </li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    {%if pnh_nonactive %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title badge badge-pill badge-warning">
+                              DANH SÁCH PHIẾU NHẬP HÀNG CHỜ DUYỆT
+                            </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Nội Dung</th>
+                                    <th>Kinh Doanh</th>
+                                    <th>Thòi Gian Đặt</th>
+                                    <th>Thời Gian Giao</th>
+                                    <th>Ghi Chú</th>
+                                    <th>Kho</th>
+                                    <th>Phê Duyệt</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {%for item in pnh_nonactive %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'view-nhap-hang' item.id %}">
+                                            <h4>{{item.code}}</h4>
+                                            <h6 style="font-family: 'Libre Barcode 39';font-size: 22px;">
+                                                {{item.code}} </h6>
+                                        </a>
+
+                                    </td>
+                                    <td>
+                                        {{item.noidung.tenhang_1}} -- Số Lượng : <i>{{item.noidung.soluong_1}}</i> --
+                                        Đơn Giá :<i> {{item.noidung.dongia_1}} </i>
+                                        <br>
+                                        {% if item.noidung.tenhang_2 %}
+                                        {{item.noidung.tenhang_2}} -- Số Lượng : <i>{{item.noidung.soluong_2}}</i> --
+                                        Đơn Giá :<i> {{item.noidung.dongia_2}} </i>
+                                        {%endif%}
+                                        <br>
+                                        {% if item.noidung.tenhang_3 %}
+                                        <strong>{{item.noidung.tenhang_3}} -- Số Lượng : <i
+                                                style="color:red; font-size:22px ">{{item.noidung.soluong_3}}</i> -- Đơn
+                                            Giá :<i style="color:red; font-size:16px ">
+                                                {{item.noidung.dongia_3}} </i></strong>
+                                        {%endif%}
+                                        <br>
+                                        {% if item.noidung.tenhang_4 %}
+                                        <strong>{{item.noidung.tenhang_4}} -- Số Lượng : <i
+                                                style="color:red; font-size:22px ">{{item.noidung.soluong_4}}</i> -- Đơn
+                                            Giá :<i style="color:red; font-size:16px ">
+                                                {{item.noidung.dongia_4}} </i></strong>
+                                        {%endif%}
+                                    </td>
+                                    <td>{{item.nhanvien}}</td>
+                                    <td>{{item.thoigiantao}}</td>
+                                    <td>{{item.thoigiannhanhang}}</td>
+                                    <td>{{item.ghichu}}</td>
+                                    <td>{{item.kho}}</td>
+                                    <td>{% if item.tinhtrang == False %} <a href="{% url 'view-nhap-hang' item.id %}" class="btn btn-sm btn-warning "style="color:white;font-size: 10px ">Chưa Xác Nhận</a>
+                                        {%endif%}
+                                    </td>
+                                </tr>
+                                {%endfor%}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Nội Dung</th>
+                                    <th>Kinh Doanh</th>
+                                    <th>Thòi Gian Đặt</th>
+                                    <th>Thời Gian Giao</th>
+                                    <th>Ghi Chú</th>
+                                    <th>Kho</th>
+                                    <th>Phê Duyệt</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                    {%endif%}
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title badge badge-pill badge-info ">DANH SÁCH PHIẾU NHẬP HÀNG ĐÃ DUYỆT</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Nội Dung</th>
+                                    <th>Kinh Doanh</th>
+                                    <th>Thòi Gian Đặt</th>
+                                    <th>Thời Gian Giao</th>
+                                    <th>Ghi Chú</th>
+                                    <th>Kho</th>
+                                    <th>Phê Duyệt</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {%for item in pnh_active %}
+                                <tr>
+                                    <td>
+
+                                        <h4>{{item.code}}</h4>
+                                        <h6 style="font-family: 'Libre Barcode 39';font-size: 22px;">{{item.code}} </h6>
+
+
+                                    </td>
+                                    <td>
+                                        {{item.noidung.tenhang_1}} -- Số Lượng : <i>{{item.noidung.soluong_1}}</i> --
+                                        Đơn Giá :<i> {{item.noidung.dongia_1}} </i>
+                                        <br>
+                                        {% if item.noidung.tenhang_2 %}
+                                        {{item.noidung.tenhang_2}} -- Số Lượng : <i>{{item.noidung.soluong_2}}</i> --
+                                        Đơn Giá :<i> {{item.noidung.dongia_2}} </i>
+                                        {%endif%}
+                                        <br>
+                                        {% if item.noidung.tenhang_3 %}
+                                        {{item.noidung.tenhang_3}} -- Số Lượng : <i>{{item.noidung.soluong_3}}</i> --
+                                        Đơn Giá :<i> {{item.noidung.dongia_3}} </i>
+                                        {%endif%}
+                                        <br>
+                                        {% if item.noidung.tenhang_4 %}
+                                        {{item.noidung.tenhang_4}} -- Số Lượng : <i>{{item.noidung.soluong_4}}</i> --
+                                        Đơn Giá :<i> {{item.noidung.dongia_4}} </i>
+                                        {%endif%}
+                                    </td>
+                                    <td>{{item.nhanvien}}</td>
+                                    <td>{{item.thoigiantao}}</td>
+                                    <td>{{item.thoigiannhanhang}}</td>
+                                    <td>{{item.ghichu}}</td>
+                                    <td>{{item.kho}}</td>
+                                    <td>
+                                      {% if item.tinhtrang == True %}
+                                      <span class="btn btn-sm btn-info" style="color:white;font-size: 10px ">Đã Xác Nhận  </span>
+                                      <a class="btn btn-sm btn-default" style="color:black;font-size: 10px ">Print </a>
+                                      {%endif%}
+                                    </td>
+                                </tr>
+                                {%endfor%}
+
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Nội Dung</th>
+                                    <th>Kinh Doanh</th>
+                                    <th>Thòi Gian Đặt</th>
+                                    <th>Thời Gian Giao</th>
+                                    <th>Ghi Chú</th>
+                                    <th>Kho</th>
+                                    <th>Phê Duyệt</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+ <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title badge badge-pill badge-danger ">DANH SÁCH PHIẾU NHẬP HÀNG TỪ CHỐI DUYỆT</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Nội Dung</th>
+                                    <th>Kinh Doanh</th>
+                                    <th>Thòi Gian Đặt</th>
+                                    <th>Thời Gian Giao</th>
+                                    <th>Kho</th>
+                                    <th>Ghi Chú</th>
+                                    
+                                    <th>Phản Hồi Kế Toán</th>
+                                    <th>Phê Duyệt</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {%for item in pnh_disable %}
+                                <tr>
+                                    <td>
+                                        <a href="{% url 'view-nhap-hang' item.id %}">
+                                        <h4>{{item.code}}</h4>
+                                        <h6 style="font-family: 'Libre Barcode 39';font-size: 22px;">{{item.code}} </h6>
+                                    </a>
+
+                                    </td>
+                                    <td>
+                                        {{item.noidung.tenhang_1}} -- Số Lượng : <i>{{item.noidung.soluong_1}}</i> --
+                                        Đơn Giá :<i> {{item.noidung.dongia_1}} </i>
+                                        <br>
+                                        {% if item.noidung.tenhang_2 %}
+                                        {{item.noidung.tenhang_2}} -- Số Lượng : <i>{{item.noidung.soluong_2}}</i> --
+                                        Đơn Giá :<i> {{item.noidung.dongia_2}} </i>
+                                        {%endif%}
+                                        <br>
+                                        {% if item.noidung.tenhang_3 %}
+                                        {{item.noidung.tenhang_3}} -- Số Lượng : <i>{{item.noidung.soluong_3}}</i> --
+                                        Đơn Giá :<i> {{item.noidung.dongia_3}} </i>
+                                        {%endif%}
+                                        <br>
+                                        {% if item.noidung.tenhang_4 %}
+                                        {{item.noidung.tenhang_4}} -- Số Lượng : <i>{{item.noidung.soluong_4}}</i> --
+                                        Đơn Giá :<i> {{item.noidung.dongia_4}} </i>
+                                        {%endif%}
+                                    </td>
+                                    <td>{{item.nhanvien}}</td>
+                                    <td>{{item.thoigiantao}}</td>
+                                    <td>{{item.thoigiannhanhang}}</td>
+                                    <td>{{item.kho}}</td>
+                                    <td>{{item.ghichu}}</td>
+                                    <td>{{item.phanhoi}}</td>
+                                    <td>
+                                      {% if item.tuchoi == True %}
+                                      <a href="{% url 'view-nhap-hang' item.id %}"class="btn btn-sm btn-danger" style="color:white;font-size: 10px ">Đã Từ Chối</a>
+                                      {%endif%}
+                                    </td>
+                                </tr>
+                                {%endfor%}
+
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Nội Dung</th>
+                                    <th>Kinh Doanh</th>
+                                    <th>Thòi Gian Đặt</th>
+                                    <th>Thời Gian Giao</th>
+                                    <th>Kho</th>
+                                    <th>Ghi Chú</th>
+                                    <th>Phản Hồi Kế Toán</th>
+                                    <th>Phê Duyệt</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+
+</div>
+
+
+{%endblock%}
+{% block scripttable %}
+
+<script src="{% static 'plugins/datatables/jquery.dataTables.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-bs4/js/dataTables.bootstrap4.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/dataTables.responsive.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-responsive/js/responsive.bootstrap4.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/dataTables.buttons.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.bootstrap4.min.js'%}"></script>
+<script src="{% static 'plugins/jszip/jszip.min.js'%}"></script>
+<script src="{% static 'plugins/pdfmake/pdfmake.min.js'%}"></script>
+<script src="{% static 'plugins/pdfmake/vfs_fonts.js'%}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.html5.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.print.min.js'%}"></script>
+<script src="{% static 'plugins/datatables-buttons/js/buttons.colVis.min.js'%}"></script>
+<!-- AdminLTE App -->
+<!--<script src="{% static 'dist/js/adminlte.min.js'%}"></script>-->
+<!--XOA-->
+
+
+
+
+<!-- AdminLTE for demo.html purposes -->
+<script src="{% static 'dist/js/demo.js'%}"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": [ "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+
+
+
+{% endblock%}

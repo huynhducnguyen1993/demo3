@@ -1,0 +1,110 @@
+{% extends 'base.html'%}
+{%load static%}
+{%block quanlykho%}
+
+
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <br>
+
+
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+
+
+                <!-- Table -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Quản Lý Đơn Hàng Nhập</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <td>
+
+
+                            <div class="row">
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-danger">
+                                        <div class="inner">
+                                            <h3>{{demph_chua_duyet_gap}}</h3>
+
+                                            <p>Đơn Nhập Hàng Gấp</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-bag"></i>
+                                        </div>
+                                        <a href="{% url 'nhaphangchuaduyetgap' %}" class="small-box-footer"> Xem <i
+                                                class="fas fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-warning">
+                                        <div class="inner">
+                                            <h3>{{demph_chua_duyet}}</h3>
+
+                                            <p>Chờ Phê Duyệt</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-stats-bars"></i>
+                                        </div>
+                                        <a href="{% url 'nhaphangchuaduyet' %}" class="small-box-footer">Xem <i
+                                                class="fas fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-success">
+                                        <div class="inner">
+                                            <h3>{{demph_duyet}}</h3>
+
+                                            <p>Đã Phê Duyệt</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-person-add"></i>
+                                        </div>
+                                        <a href="#" class="small-box-footer">Xem <i
+                                                class="fas fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                                <div class="col-lg-3 col-6">
+                                    <!-- small box -->
+                                    <div class="small-box bg-sercondary">
+                                        <div class="inner">
+                                            <h3>65</h3>
+
+                                            <p>Đơn Từ Chối</p>
+                                        </div>
+                                        <div class="icon">
+                                            <i class="ion ion-pie-graph"></i>
+                                        </div>
+                                        <a href="#" class="small-box-footer">Xem<i
+                                                class="fas fa-arrow-circle-right"></i></a>
+                                    </div>
+                                </div>
+                                <!-- ./col -->
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+    </section>
+
+
+</div>
+
+
+{%endblock%}

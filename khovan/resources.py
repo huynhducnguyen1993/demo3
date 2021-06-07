@@ -1,0 +1,1 @@
+from import_export import resourcesfrom khovan.models import Hanghoaclass HanghoaResource(resources.ModelResource):    class Meta:        model = Hanghoa        exclude = ('imported',)

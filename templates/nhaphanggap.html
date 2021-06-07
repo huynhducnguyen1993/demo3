@@ -1,0 +1,74 @@
+{% extends 'base.html'%}
+{%load static%}
+
+{%block nhaphanggap%}
+<div class="content-wrapper">
+  <section style="padding:5px; float: right ">
+<a type="button" href="{% url 'phieu-nhap-kho'%}" class="btn btn-primary btn-lg" >
+ Tạo Phiếu Nhập Hàng Kinh Doanh
+</a>
+
+</section>
+<br>
+<section  style="padding:5px;">
+  <div class="pnh_nonactive" style="padding:15px;font-size: 30px">
+    <h2 class="badge badge-pill badge-secondary">Danh sách phiếu nhập hàng Gấp Chưa duyệt</h2>
+  </div>
+  <table class="table table-responsive table-bordered ">
+    <thead>
+      <tr>
+        
+        <th>Code</th>
+        <th>Nội Dung</th>
+         <th>Kinh Doanh</th>
+        <th>Thòi Gian Đặt</th>
+        <th>Thời Gian Giao</th>
+        <th>Ghi Chú</th>
+        <th>Kho</th>
+        <th>Phê Duyệt</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {%for item in pnh_nonactive %}
+      <tr>
+        <td >
+              <a href="{% url 'view-nhap-hang' item.id %}">
+              <h4>{{item.code}}</h4>
+              <h6 style="font-family: 'Libre Barcode 39';font-size: 22px;">{{item.code}} </h6>
+             </a>
+
+           </td>
+        <td>
+            {{item.noidung.tenhang_1}} -- Số Lượng : <i >{{item.noidung.soluong_1}}</i> -- Đơn Giá :<i> {{item.noidung.dongia_1}} </i>
+            <br>
+            {% if item.noidung.tenhang_2  %}
+              {{item.noidung.tenhang_2}} -- Số Lượng : <i >{{item.noidung.soluong_2}}</i> -- Đơn Giá :<i> {{item.noidung.dongia_2}} </i>
+            {%endif%}
+            <br>
+            {% if item.noidung.tenhang_3  %}
+              <strong>{{item.noidung.tenhang_3}} -- Số Lượng : <i style="color:red; font-size:22px ">{{item.noidung.soluong_3}}</i> -- Đơn Giá :<i style="color:red; font-size:16px "> {{item.noidung.dongia_3}} </i></strong>
+            {%endif%}
+            <br>
+            {% if item.noidung.tenhang_4  %}
+              <strong>{{item.noidung.tenhang_4}} -- Số Lượng : <i style="color:red; font-size:22px ">{{item.noidung.soluong_4}}</i> -- Đơn Giá :<i style="color:red; font-size:16px "> {{item.noidung.dongia_4}} </i></strong>
+            {%endif%}
+        </td>
+          <td>{{item.nhanvien}}</td>
+        <td>{{item.thoigiantao}}</td>
+        <td>{{item.thoigiannhanhang}}</td>
+        <td>{{item.ghichu}}</td>
+        <td>{{item.kho}}</td>
+        <td>{% if item.tinhtrang == False %} <span class="badge-pill badge-warning " style="color:white;font-size: 16px " >Chưa Xác Nhận</span> {%endif%}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+  </table>
+</section>
+
+
+</div>
+
+
+
+{%endblock%}

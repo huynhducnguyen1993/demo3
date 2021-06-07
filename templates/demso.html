@@ -1,0 +1,40 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<form method="post">
+    <input type="text" id="the_input_id">
+    <input type="text" id="the_input_id1">
+    <input type="text" id="kq" name="kq">
+</form>
+
+<div   id="total"></div>
+
+<script type="text/javascript">
+  
+  $(function() {
+    
+
+    $('#the_input_id').keyup(function() {  
+        updateTotal();
+    });
+    
+    $('#the_input_id1').keyup(function() {  
+        updateTotal();
+    });
+    
+    var updateTotal = function () {
+      var input1 = parseInt($('#the_input_id').val());
+      var input2 = parseInt($('#the_input_id1').val());
+      var tong =input1 * input2
+     
+      $("input[type=text][name=kq]" ).val(tong);
+      
+    };
+
+    var output_total = $('#total');
+
+    var total = firstInput+firstInput1;
+
+   output_total.text(total);
+
+ });
+</script>

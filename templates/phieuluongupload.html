@@ -1,0 +1,137 @@
+                    
+
+{% extends 'base.html'%}
+{%load static%}
+ {% block cssnhanvien %}
+  <link rel="stylesheet" href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}">
+  <link rel="stylesheet" href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css'%}">
+  {%endblock%}
+{% block phieuluongnhanvien%}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Bảng  Lương Nhân Vên</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">phieuluong</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <section>
+        
+
+         <form  method="post" class="form-inline" role="form">
+              {% csrf_token %}
+              <div class="form-group">
+                  <select name="thang" id="input" class="form-control"  required="required">
+                         <option>--Chọn Tháng---</option>
+                        {% for i in thang %}
+                        <option value="{{i}}"> Tháng {{i}} </option>
+                        {%endfor%}
+                        
+                   </select>
+                   <select name="nam" id="input" class="form-control"  required="required">
+                        <option>--Chọn Năm---</option>
+                        {% for i in nam %}
+                        <option value="{{i}}"> Năm {{i}} </option>
+                        {%endfor%}
+                        
+                   </select>
+              </div>
+         
+              
+                
+              <button type="submit" name="filter"  class="btn btn-primary">Lọc</button>
+              
+         </form><br>
+         <button type="submit" class="btn btn-info" onClick="refreshPage()">Refresh</button><br>
+    </section>
+    <section>
+      <script type="text/javascript">
+        function refreshPage(){
+     window.location.href = "http://127.0.0.1:8000/phieu-luong-upload/";
+} 
+      </script>
+    <table class="table table-border table-responsive table-inverse">
+              <thead>
+                   <tr >
+                  
+                    <th >Nhân Viên</th>
+                    <th>Năm</th>
+                    <th>Tháng</th>
+                    <th>Ngày Làm Thực Tế </th>
+                    <th>Công Chuẩn  </th>
+                    <th>Công +/- Trong Tháng </th>
+                    <th>Lương Cơ Bản</th>
+                     <th>Tổng Thu Nhập</th>
+                    <th>Trừ Tiền Bảo Hiểm</th>
+                    <th>Tiền Lương Thực Lãnh </th>
+                  
+                   </tr>
+              </thead>
+              <tbody>
+               {% for item in pl%}
+                   <tr>
+                        <td><a methods="post" href="{% url 'xemphieuluong' item.id%}">{{item.nhanvien}}</a></td>
+                        <td>{{item.nam}}</td>
+                        <td>{{item.thang}}</td>
+                        <td>{{item.ngaylamthucte}}</td>
+                        <td>{{item.congchuan}}</td>
+                        <td>{{item.congthembot}}</td>
+                        <td>{{item.luongcoban}}</td>
+                        <td>{{item.tongthunhap}}</td>
+                        <td>{{item.trubaohiem}}</td>
+                        <td>{{item.tienluongthuclanhcuoithang}}</td>
+
+                   </tr>
+                   {%endfor%}
+              </tbody>
+         </table>     
+    </section>
+
+   </div>
+
+
+{%endblock%}
+<!-- 
+                    <th >Nhân Viên</th>
+                    <th>Năm</th>
+                    <th>Tháng</th>
+                    <th>Ngày Làm Thực Tế </th>
+                    <th>Công Chuẩn  </th>
+                    <th>Công +/- Trong Tháng </th>
+                    <th>Lương Cơ Bản</th>
+                    <th>Phụ Cấp </th>
+                    <th>Tiền Điện Thoại</th>
+                    <th>Tiền Xăng</th> 
+                    <th>Tiền Cơm</th>
+                    <th>Lương Trách Nhiệm</th>
+                    <th>TIền Điện Thoại Hổ Trợ</th>
+                    <th>Ngày Nghỉ Không Phép </th>
+                    <th>Trừ Lương Nghỉ Không Phép</th>
+                    <th>Hổ Trợ BHXH Trong Lương</th>
+                    <th>Lương Chủ Nhật X 2</th>
+                    <th>Tổng Thu Nhập</th>
+                    <th>Trừ Tiền Ứng Giữa Tháng</th>
+                    <th>Trừ Tiền Mặt Ứng Giữa Tháng</th>
+                    <th>Trừ Tiền Điện Thoại Công Ty Trả Hộ</th>
+                    <th>Trừ Tiền Ứng Trong Tháng</th>
+                    <th>Trừ Tiền Bảo Hiểm</th>
+                    <th>Trừ Tiền Phạt</th>
+                    <th>Tiền Lương Thực Lãnh </th>
+                    <th>Nợ Tháng Trước</th>
+                    <th>Mượn Nợ Tháng Này</th>
+                    <th>Trừ Nợ Trong Lương</th>
+                    <th>Thu Nợ Tiền Mặt</th>
+                    <th>Nợ  Còn Luân Chuyển Tháng Sau</th> -->

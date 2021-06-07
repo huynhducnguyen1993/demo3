@@ -1,0 +1,41 @@
+#header {
+   
+    padding: 10px 40px;
+    background: #2ab9ff;
+    color: #fbfefc;
+
+}
+:root {
+	--selected-row: #df9e9e;
+}
+#user-tools {
+    float: right;
+    padding: 0;
+    margin: 0 0 0 20px;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-align: right;
+    color: red;
+
+    }
+
+.dashboard #content{
+	width: 75%;
+}    
+div.breadcrumbs {
+    background: #1490cf;
+    padding: 10px 40px;
+    border: none;
+    color: var(--breadcrumbs-fg);
+    text-align: left;
+}
+
+.module h2, .module caption, .inline-group h2 {
+	background: #2ab9ff;
+   
+}
+#content-related .module h2 {
+background: #ffd12a;
+	}

@@ -1,0 +1,355 @@
+{% extends 'base.html'%}
+{%load static%}
+{%block phieunhapkho%}
+
+<div class="content-wrapper">
+
+
+    <section style="padding:145px">
+
+
+        <h1>PHIẾU NHẬP HÀNG NAM SAPA</h1><br><br>
+        <form method="post" id="indexForm" data-courses-url="{% url 'ajax_load_courses' %}">
+            {% csrf_token %}
+            <div class="row">
+
+                <div class="col col-4">
+
+                    <h6>
+                        Nhân Viên Kinh Doanh
+                        <select name="nhanvien" id="nhanvien" class="form-control">
+                            <option> --Chọn Nhân Viên--</option>
+                            {% for item in nhanvien %}
+                            <option value="{{item.id}}" required="required">{{item.tennv}}</option>
+                            {% endfor %}
+                        </select>
+
+
+                    </h6>
+
+                    <h6>
+                        Điện Thoại Liên Hệ
+                        <select name="sdt" id="sdt" class="form-control">
+                            
+                        </select>
+
+                    </h6>
+
+                    <h6>Code:
+                        <input class="btn btn-default form-control " value="{{code}}" readonly="true" name="code" type="text" >
+                    </h6>
+                </div>
+                <div class="col col-5">
+                    <h6>Nhà cung cấp :
+                        <select name="nhacungcap" id="nhacungcap" class="form-control">
+                         {% for item in nhancungcap %}
+                         <option value="{{item.id}}" required="required">{{item.tennhacungcap}}</option>
+                           {% endfor %}
+                    </select></h6>
+                    <h6>Thời Gian Đặt:<input type="date" name="thoigiantao" value="" placeholder="" required="required" class="form-control"></h6>
+                    <h6>Thời Gian Dự Kiến Giao:<input type="date" name="thoigiannhanhang" value="" class="form-control" placeholder="" required="required">
+                    </h6>
+                </div>
+                <div class="col col-3">
+
+                    <h6>Kho Nhập
+                        <select id="kho" name="kho"  class="form-control">
+                            <option> --Chọn kho--</option>
+                            {% for item in thukho %}
+                            <option value="{{item.id}}" required="required">{{item.kho}}</option>
+                            {% endfor %}
+                        </select>
+                    </h6>
+                    <h6>Nhập ghi chú:
+
+                    	<textarea name="ghichu" id="inputGhichu" class="form-control" rows="3" required="required"></textarea>
+
+                    </h6>
+                </div>
+                 <table class="table table-bordered">
+                    <thead>
+
+                    <tr>
+                        <th>STT</th>
+                        <th>Hãng</th>
+                        <th>Hàng Hoá</th>
+                        <th>Số Lượng</th>
+                        <th>Đơn Giá</th>
+                        <th>Thành Tiền</th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            <select name="hang1" id="programming" class="form-control">
+                                <option value=""  >--- Hãng ---</option>
+                                {% for item in hangsx %}
+                                <option value="{{item.id}}" required="required">{{item.tenhangsx}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                        <td>
+                            <select name="courses" id="courses" class="form-control">
+
+                            </select>
+                        </td>
+                        <td><input  type="number" name="soluong1" id="soluong1" class="form-control" value="" required="required"
+                                   pattern="" title="" max="10000" min="1"></td>
+                        <td>
+                            <input type="number" id="dongia1"  name="dongia1" class="form-control" value="" max="100000000000"
+                                   min="0">
+                        </td>
+                        <td > 
+                        	<input type="text" name="thanhtien1" class="form-control" readonly="true">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>2</td>
+                        <td><select name="hang2" id="programming2" class="form-control">
+                            <option value="">--- Hãng ---</option>
+                            {% for item in hangsx %}
+                            <option value="{{item.id}}">{{item.tenhangsx}}</option>
+                            {% endfor %}
+                        </select></td>
+                        <td>
+                            <select name="courses2" id="courses2" class="form-control">
+
+                            </select>
+                        </td>
+                       <td><input  type="number" name="soluong2" id="soluong2" class="form-control" value=""
+                                   pattern="" title="" max="10000" min="1"></td>
+                        <td>
+                            <input type="number" id="dongia2"  name="dongia2" class="form-control" value="" max="100000000000"
+                                   min="0">
+                        </td>
+                        <td > 
+                        	<input type="text" name="thanhtien2" class="form-control" readonly="true">
+                        </td>
+                    </tr>
+                     <tr>
+                        <td>3</td>
+                        <td><select name="hanghoa3" id="programming3" class="form-control">
+                            <option value="">--- Hãng ---</option>
+                            {% for item in hangsx %}
+                            <option value="{{item.id}}">{{item.tenhangsx}}</option>
+                            {% endfor %}
+                        </select></td>
+                        <td>
+                            <select name="courses3" id="courses3" class="form-control">
+
+                            </select>
+                        </td>
+                        <td><input  type="number" name="soluong3" id="soluong3" class="form-control" value=""
+                                   pattern="" title="" max="10000" min="1"></td>
+                        <td>
+                            <input type="number" id="dongia3"  name="dongia3" class="form-control" value="" max="100000000000"
+                                   min="0">
+                        </td>
+                        <td > 
+                        	<input type="text" name="thanhtien3" class="form-control" readonly="true">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><select name="hanghoa4" id="programming4" class="form-control">
+                            <option value="">--- Hãng ---</option>
+                            {% for item in hangsx %}
+                            <option value="{{item.id}}">{{item.tenhangsx}}</option>
+                            {% endfor %}
+                        </select></td>
+                        <td>
+                            <select name="courses4" id="courses4" class="form-control">
+
+                            </select>
+                        </td>
+                        <td><input  type="number" name="soluong4" id="soluong4" class="form-control" value=""
+                                   pattern="" title="" max="10000" min="1"></td>
+                        <td>
+                            <input type="number" id="dongia4"  name="dongia4" class="form-control" value="" max="100000000000"
+                                   min="0">
+                        </td>
+                        <td > 
+                        	<input type="text" name="thanhtien4" class="form-control" readonly="true">
+                        </td>
+                    </tr>
+
+                    
+                    </tbody>
+
+                </table>
+
+
+                <button type="submit" class="btn btn-info">Hoàn Thành</button>
+
+            </div>
+
+           
+            	
+            		
+          
+        </form>
+    </section>
+
+
+</div>
+
+<script>
+	function formatNumber(nStr, decSeperate, groupSeperate) {
+            nStr += '';
+            x = nStr.split(decSeperate);
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+            }
+            return x1 + x2;
+        }
+
+  $(function() {
+    
+
+   
+    $('#soluong1').keyup(function() {  
+        updateTotal();
+    });
+    
+    $('#dongia1').keyup(function() {  
+        updateTotal();
+    });
+    $('#soluong2').keyup(function() {  
+        updateTotal();
+    });
+    $('#dongia2').keyup(function() {  
+        updateTotal();
+    });
+    $('#soluong3').keyup(function() {  
+        updateTotal();
+    });
+    $('#dongia3').keyup(function() {  
+        updateTotal();
+    });
+     $('#soluong4').keyup(function() {  
+        updateTotal();
+    });
+    $('#dongia4').keyup(function() {  
+        updateTotal();
+    });
+    var updateTotal = function () {
+     
+      var input1 = parseInt($('#soluong1').val());
+      var input2 = parseInt($('#dongia1').val());
+      var input11 = parseInt($('#soluong2').val());
+      var input22 = parseInt($('#dongia2').val());
+      var input113 = parseInt($('#soluong3').val());
+      var input223 = parseInt($('#dongia3').val());
+      var input114 = parseInt($('#soluong4').val());
+      var input224 = parseInt($('#dongia4').val());
+    
+      var thanhtien1 = input1 * input2;  
+      var thanhtien2 = input11 * input22;
+      var thanhtien3 = input113 * input223;
+      var thanhtien4 = input114 * input224;
+      
+      $("input[type=text][name=thanhtien1]" ).val(formatNumber(thanhtien1, '.', ','));
+      $("input[type=text][name=thanhtien2]" ).val(formatNumber(thanhtien2, '.', ','));
+      $("input[type=text][name=thanhtien3]" ).val(formatNumber(thanhtien3, '.', ','));
+      $("input[type=text][name=thanhtien4]" ).val(formatNumber(thanhtien4, '.', ','));
+
+       
+    };
+
+    
+ 	});
+
+
+
+    $("#programming").change(function () {
+      var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+      var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+        data: {
+          'programming': programmingId       // add the programming id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#courses").html(data);  // replace the contents of the course input with the data that came from the server
+        }
+      });
+
+    });
+
+$("#programming2").change(function () {
+      var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+      var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+      
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+        data: {
+          'programming2': programmingId       // add the programming id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#courses2").html(data);  // replace the contents of the course input with the data that came from the server
+        }
+      });
+
+    });
+
+$("#programming3").change(function () {
+      var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+      var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+      
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+        data: {
+          'programming3': programmingId       // add the programming id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#courses3").html(data);  // replace the contents of the course input with the data that came from the server
+        }
+      });
+
+    });
+
+
+$("#programming4").change(function () {
+      var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+      var programmingId = $(this).val();  // get the selected programming ID from the HTML input
+      
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+        data: {
+          'programming4': programmingId       // add the programming id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#courses4").html(data);  // replace the contents of the course input with the data that came from the server
+        }
+      });
+
+    });
+
+$("#nhanvien").change(function () {
+      var url = $("#indexForm").attr("data-courses-url");  // get the url of the `load_courses` view
+      var nhanvien_id = $(this).val();  // get the selected programming ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/load-courses/)
+        data: {
+          'nhanvien_id': nhanvien_id       // add the programming id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_courses` view function
+          $("#sdt").html(data);  // replace the contents of the course input with the data that came from the server
+        }
+      });
+
+    });
+
+</script>
+
+
+
+{%endblock%}
