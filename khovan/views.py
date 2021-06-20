@@ -11,7 +11,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
 from qlns.models import Nhanvien
-from django.http import HttpResponse, response
+from django.http import HttpResponse, response, QueryDict
 import json
 from django.shortcuts import get_object_or_404
 import datetime
@@ -28,16 +28,17 @@ class Nhaphangs(LoginRequiredMixin, View):
     def get(self, request):
         hanghoa = Hanghoa.objects.all()
         khohang = Khohang.objects.all()
-        pnh_nonactive = Phieunhaphang.objects.filter(tinhtrang=False,tuchoi=False)
-        pnh_disable = Phieunhaphang.objects.filter(tinhtrang=False,tuchoi=True)
-        pnh_active = Phieunhaphang.objects.filter(tinhtrang=True,tuchoi=False)
+        pnh_nonactive = Phieunhaphang.objects.filter(tinhtrang=False, tuchoi=False)
+
+        pnh_disable = Phieunhaphang.objects.filter(tinhtrang=True, tuchoi=True)
+        pnh_active = Phieunhaphang.objects.filter(tinhtrang=True, tuchoi=False)
 
         context = {
             'hanghoa': hanghoa,
             'khohang': khohang,
             'pnh_nonactive': pnh_nonactive,
             'pnh_active': pnh_active,
-            'pnh_disable':pnh_disable,
+            'pnh_disable': pnh_disable,
         }
         return render(request, 'nhaphang.html', context)
 
@@ -107,20 +108,51 @@ class Phieunhapkho(LoginRequiredMixin, View):
             else:
                 tenhang_4 = None
 
-            noidung = {
+            if request.POST.get('hang1'):
+                ten_ = Hangsx.objects.get(pk=request.POST.get('hang1'))
+                ten_hangsx1 = ten_.tenhangsx
+            else:
+                ten_hangsx1 = None
 
+            if request.POST.get('hang2'):
+                ten_ = Hangsx.objects.get(pk=request.POST.get('hang2'))
+                ten_hangsx2 = ten_.tenhangsx
+            else:
+                ten_hangsx2 = None
+
+            if request.POST.get('hang3'):
+                ten_ = Hangsx.objects.get(pk=request.POST.get('hang3'))
+                ten_hangsx3 = ten_.tenhangsx
+            else:
+                ten_hangsx3 = None
+
+            if request.POST.get('hang4'):
+                ten_ = Hangsx.objects.get(pk=request.POST.get('hang4'))
+                ten_hangsx4 = ten_.tenhangsx
+            else:
+                ten_hangsx4 = None
+
+            noidung = {
+                'id_hangsx1': request.POST.get('hang1'),
+                'ten_hangsx1': ten_hangsx1,
                 'hang_1': request.POST.get('courses'),
                 'tenhang_1': tenhang_1,
                 'soluong_1': request.POST.get('soluong1'),
                 'dongia_1': request.POST.get('dongia1'),
+                'id_hangsx2': request.POST.get('hang2'),
+                'ten_hangsx2': ten_hangsx2,
                 'hang_2': request.POST.get('courses2'),
                 'tenhang_2': tenhang_2,
                 'soluong_2': request.POST.get('soluong2'),
                 'dongia_2': request.POST.get('dongia2'),
+                'id_hangsx3': request.POST.get('hang3'),
+                'ten_hangsx3': ten_hangsx3,
                 'hang_3': request.POST.get('courses3'),
                 'tenhang_3': tenhang_3,
                 'soluong_3': request.POST.get('soluong3'),
                 'dongia_3': request.POST.get('dongia3'),
+                'id_hangsx4': request.POST.get('hang4'),
+                'ten_hangsx4': ten_hangsx4,
                 'hang_4': request.POST.get('courses4'),
                 'tenhang_4': tenhang_4,
                 'soluong_4': request.POST.get('soluong4'),
@@ -143,10 +175,11 @@ class Viewphieunhap(LoginRequiredMixin, View):
         nd = phieunhaphang.noidung
         hangsx = Hangsx.objects.all()
         hanghoa = Hanghoa.objects.all()
-        khohang = Khohang.objects.all()
-        thukho = Thukho_Khohang.objects.all()
+        khohang = Khohang.objects.get(tenkho=phieunhaphang.kho)
+        thukho = Thukho_Khohang.objects.exclude(kho=phieunhaphang.kho)
         nhanvien = Nhanvien.objects.get(tennv=phieunhaphang.nhanvien)
-        nhancungcap = Nhacungcap.objects.all()
+        nhancungcap_ = Nhacungcap.objects.get(tennhacungcap=phieunhaphang.nhacungcap)
+        nhancungcap = Nhacungcap.objects.exclude(tennhacungcap=nhancungcap_.tennhacungcap)  # Loại phần tử trong queryset
         formedit = Editnhaphang(instance=phieunhaphang)
 
         context = {
@@ -158,15 +191,15 @@ class Viewphieunhap(LoginRequiredMixin, View):
             'thukho': thukho,
             'nhanvien': nhanvien,
             'nhancungcap': nhancungcap,
-            'form':formedit,
+            'nhacungcap_': nhancungcap_,
+            'form': formedit,
 
         }
         return render(request, 'viewphieunhaphang.html', context)
 
+    def post(self, request, code_id):
 
-    def post(self,request,code_id):
-
-
+        pl = Phieunhaphang.objects.get(pk=code_id)
         if request.POST.get('courses'):
             tenhang_d1 = Hanghoa.objects.get(pk=request.POST.get('courses'))
             tenhang_1 = tenhang_d1.tenhanghoa
@@ -187,25 +220,70 @@ class Viewphieunhap(LoginRequiredMixin, View):
             tenhang_4 = tenhang_d4.tenhanghoa
         else:
             tenhang_4 = None
-        noidung = {
 
+        if request.POST.get('hang1'):
+            ten_ = Hangsx.objects.get(pk=request.POST.get('hang1'))
+            ten_hangsx1 = ten_.tenhangsx
+        else:
+            ten_hangsx1 = None
+
+        if request.POST.get('hang2'):
+            ten_ = Hangsx.objects.get(pk=request.POST.get('hang2'))
+            ten_hangsx2 = ten_.tenhangsx
+        else:
+            ten_hangsx2 = None
+
+        if request.POST.get('hang3'):
+            ten_ = Hangsx.objects.get(pk=request.POST.get('hang3'))
+            ten_hangsx3 = ten_.tenhangsx
+        else:
+            ten_hangsx3 = None
+
+        if request.POST.get('hang4'):
+            ten_ = Hangsx.objects.get(pk=request.POST.get('hang4'))
+            ten_hangsx4 = ten_.tenhangsx
+        else:
+            ten_hangsx4 = None
+        noidung = {
+            'id_hangsx1': request.POST.get('hang1'),
+            'ten_hangsx1': ten_hangsx1,
             'hang_1': request.POST.get('courses'),
             'tenhang_1': tenhang_1,
             'soluong_1': request.POST.get('soluong1'),
             'dongia_1': request.POST.get('dongia1'),
+            'id_hangsx2': request.POST.get('hang2'),
+            'ten_hangsx2': ten_hangsx2,
             'hang_2': request.POST.get('courses2'),
             'tenhang_2': tenhang_2,
             'soluong_2': request.POST.get('soluong2'),
             'dongia_2': request.POST.get('dongia2'),
+            'id_hangsx3': request.POST.get('hang3'),
+            'ten_hangsx3': ten_hangsx3,
             'hang_3': request.POST.get('courses3'),
             'tenhang_3': tenhang_3,
             'soluong_3': request.POST.get('soluong3'),
             'dongia_3': request.POST.get('dongia3'),
+            'id_hangsx4': request.POST.get('hang4'),
+            'ten_hangsx4': ten_hangsx4,
             'hang_4': request.POST.get('courses4'),
             'tenhang_4': tenhang_4,
             'soluong_4': request.POST.get('soluong4'),
-            'dongia_4': request.POST.get('dongia14')
+            'dongia_4': request.POST.get('dongia4')
         }
+        a = request.POST.get('csrfmiddlewaretoken')
+
+        querydict = QueryDict('', mutable=True)
+        querydict.update(
+            {'csrfmiddlewaretoken': a, 'noidung': json.dumps(noidung), 'kho': request.POST.get('kho'), 'code': code_id,
+             'username': request.user, 'nhanvien': pl.nhanvien, 'phanhoi': pl.phanhoi, 'nhacungcap': pl.nhacungcap,
+             'ghichu': request.POST.get('ghichu'), 'thoigiantao': request.POST.get('thoigiantao'),
+             'thoigiannhanhang': request.POST.get('thoigiannhanhang')})
+        # 'noidung':json.dumps(noidung): chuyển thành JSON
+
+        form = Editnhaphang(querydict, instance=pl)
+
+        if form.is_valid():
+            form.save()
 
         return redirect('nhap-hang')
 
@@ -264,29 +342,30 @@ class Quanlynhaphang(LoginRequiredMixin, View):
     def get(self, request):
         phieuhang = Phieunhaphang.objects.all()
         demph_duyet = 0
-        demph_chua_duyet_gap=0
-        demph_chua_duyet=0
+        demph_chua_duyet_gap = 0
+        demph_chua_duyet = 0
         i = 0
         j = 0
-        k = -1
+        k = 0
         for item in phieuhang:
-            if item.tinhtrang==True:
-                i+=1
-            if item.tinhtrang==False:
-                j+=1
-            if item.tinhtrang==False and item.tuchoi==False :
+            if item.tinhtrang == True:
+                i += 1
+            if item.tinhtrang == False:
+                j += 1
+            if item.tinhtrang == False and item.tuchoi == False:
+
                 if 'GẤP' in item.ghichu:
-                    k+=1
-            demph_duyet =i
+                    k += 1
+            demph_duyet = i
             demph_chua_duyet = j
             demph_chua_duyet_gap = k
 
-        context={
-            'demph_duyet':demph_duyet,
-            'demph_chua_duyet':demph_chua_duyet,
-            'demph_chua_duyet_gap':demph_chua_duyet_gap
+        context = {
+            'demph_duyet': demph_duyet,
+            'demph_chua_duyet': demph_chua_duyet,
+            'demph_chua_duyet_gap': demph_chua_duyet_gap
         }
-        return render(request, 'quanly.html',context)
+        return render(request, 'quanly.html', context)
 
     def post(self, request):
         pass
@@ -331,24 +410,41 @@ class Duyetnhaphang(LoginRequiredMixin, View):
     def get(self, request, code_id):
         user = request.user
 
-
         if user.username == 'thangnguyen':
             nhaphang = Phieunhaphang.objects.get(pk=code_id)
             form = Nhaphangchuaduyetgaps(instance=nhaphang)
             context = {
                 'phieunhaphang': nhaphang,
-                'form':form
-                }
+                'form': form
+            }
             return render(request, 'duyetnhaphang.html', context)
         else:
             return HttpResponse("Ban Khong Phai Nguyen Minh Thang")
 
     def post(self, request, code_id):
-        print(request.POST)
+
         user = request.user
         if user.username == 'thangnguyen':
             pl = Phieunhaphang.objects.get(pk=code_id)
-            form = Nhaphangchuaduyetgaps(request.POST,instance=pl)
+            form = Nhaphangchuaduyetgaps(request.POST, instance=pl)
+
             if form.is_valid():
                 form.save()
         return redirect('nhaphangchuaduyetgap')
+
+
+class Thukho(LoginRequiredMixin,View):
+    login_url = '/login/'
+    def get(self,request):
+        donhangchoxuly =  Phieunhaphang.objects.filter(tinhtrang=True,tuchoi=False)
+        item_donhangchoxuly = 0
+        for item in donhangchoxuly:
+            if item.id:
+                item_donhangchoxuly += 1
+
+        print(item_donhangchoxuly)
+        context = {
+            'donhangchoxuly':donhangchoxuly,
+            'item_donhangchoxuly':item_donhangchoxuly,
+        }
+        return render(request,'thukho.html',context)

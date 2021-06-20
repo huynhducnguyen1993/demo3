@@ -1,7 +1,5 @@
 from django.contrib import admin
-from .models import (Gas,Loaimay,Congsuat,Hemay,
-                     Nganhhang,Hangsx,Hanghoa,Khohang,Thukho_Khohang,
-                     Ton_kho,Nhaphang,Xuathang,Phieunhaphang,Nhacungcap)
+from .models import *
 from khovan.resources import HanghoaResource
 from khovan.models import Hanghoa,Hangsx,Nganhhang
 from datetime import datetime
@@ -87,6 +85,14 @@ class KhohangAdmins(admin.ModelAdmin):
 
 admin.site.register(Khohang,KhohangAdmins)
 
+
+class NhaphangthukhoAdmins(admin.ModelAdmin):
+
+    list_display = ('id','sophieunhaphang','hanghoa')
+    search_fields = ('hanghoa',)
+    list_per_page = 10
+
+admin.site.register(Nhaphangthukho,NhaphangthukhoAdmins)
 
 class Thukho_KhohangAdmins(admin.ModelAdmin):
     list_display = ('id', 'nhanvien','kho')

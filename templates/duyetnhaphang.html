@@ -91,6 +91,7 @@
                                        </tbody>
                                    </table>
                                </div>
+                              
                                <div><label>Phản Hồi Cho Kinh Danh   :</label>{{form.phanhoi}}<br>
                                
                                    <div class="radio">
@@ -142,7 +143,9 @@
         });
     
           $("#id_tuchoi").change('checked',function(){
+           
           $('#nonhiden').hide();
+          $('#id_tinhtrang').not(this).prop('checked',this.checked);
         });
 
            $('#load').click(function() {

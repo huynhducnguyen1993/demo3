@@ -155,6 +155,24 @@ class Phieunhaphang(models.Model):
     def __str__(self):
         return self.code
 
+class Nhaphangthukho(models.Model):
+
+    sophieunhaphang = models.ForeignKey(Phieunhaphang,on_delete=models.CASCADE,verbose_name='Mã Số Nhâp Hàng ')
+    hanghoa = models.ForeignKey(Hanghoa, on_delete=models.CASCADE, verbose_name='Tên Hàng Hoá')
+    soluongtong = models.IntegerField(default=0, verbose_name='Số Lượng Tổng')
+    soluongnhap1 = models.IntegerField(default=0,null=True,blank=True, verbose_name='Số Lượng Nhâp Lần Đầu')
+    soluongnhap2 = models.IntegerField(default=0,null=True,blank=True,  verbose_name='Số Lượng Nhâp Lần Hai')
+    soluongnhap3 = models.IntegerField(default=0,null=True,blank=True,  verbose_name='Số Lượng Nhâp Lần Ba')
+    daxuly = models.BooleanField(verbose_name='check đã xử lý')
+    xacnhan = models.BooleanField(verbose_name='check xác nhận -  không check là hủy ')
+
+    class Meta:
+        verbose_name = "NHẬP KHO"
+        verbose_name_plural = 'NHẬP KHO'
+
+    def __int__(self):
+        return self.sophieunhaphang
+
 class Xuathang(models.Model):
 
     hanghoa = models.ForeignKey(Hanghoa, on_delete=models.CASCADE, verbose_name='Tên Hàng Hoá')

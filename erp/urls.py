@@ -52,5 +52,6 @@ urlpatterns = [
     path('duyet-nhap-hang/<int:code_id>',Duyetnhaphang.as_view(),name='duyetnhaphang'),
     path('xuat-hang/',Xuathang.as_view(),name="xuat-hang"),
     path('ton-kho/',Tonkho.as_view(),name="ton-kho"),
+    path('kho-van/thu-kho',Thukho.as_view(),name="thu-kho"),
     path('dieu-chuyen-kho/',Dieuchuyenkho.as_view(),name="dieu-chuyen-kho"),
               ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
